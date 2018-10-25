@@ -1,5 +1,7 @@
 # gta-ynov
 
+Pour voir les dernières modifcations, aller sur la branche `develop`.
+
 ## Project setup
 ```
 npm install
