@@ -1,5 +1,5 @@
 <template>
-    <div id="FicheSalarie">
+    <div id="FicheSalarie" class="container">
         <h2>Fiche salarié</h2>
     </div>
 </template>

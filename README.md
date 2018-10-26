@@ -2,32 +2,40 @@
 
 Pour voir les dernières modifcations, aller sur la branche `develop`.
 
-## Project setup
+Pour suivre l'avacement du projet, il est aussi possible de consulter le [Trello](https://trello.com/b/1qy2WoFk/gta-ynov-vue)
+
+Le projet sera disponible à l'url suivante : [gta.ynov.benjaminbrasseur.fr](http://gta.ynov.benjaminbrasseur.fr) (Non disponible)
+
+## Installation du projet 
+
+Faire un clone du projet puis lancer la commande suivante pour récupérer les dépendances.
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Pour lancer le serveur en développement
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Pour générer le projet et le mettre en production
 ```
 npm run build
 ```
 
-### Run your tests
+### Autres commandes
+
+#### Run your tests
 ```
 npm run test
 ```
 
-### Lints and fixes files
+#### Lints and fixes files
 ```
 npm run lint
 ```
 
-### Run your unit tests
+#### Run your unit tests
 ```
 npm run test:unit
 ```
