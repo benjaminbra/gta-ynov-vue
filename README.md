@@ -4,7 +4,7 @@ Pour voir les dernières modifcations, aller sur la branche `develop`.
 
 Pour suivre l'avacement du projet, il est aussi possible de consulter le [Trello](https://trello.com/b/1qy2WoFk/gta-ynov-vue)
 
-Le projet sera disponible à l'url suivante : [gta.ynov.benjaminbrasseur.fr](http://gta.ynov.benjaminbrasseur.fr) (Non disponible)
+Le projet est disponible à l'url suivante : [gta.ynov.benjaminbrasseur.fr](http://gta.ynov.benjaminbrasseur.fr)
 
 ## Installation du projet 
 
