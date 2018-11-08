@@ -4,6 +4,12 @@ Pour voir les dernières modifcations, aller sur la branche `develop`.
 
 Pour suivre l'avacement du projet, il est aussi possible de consulter le [Trello](https://trello.com/b/1qy2WoFk/gta-ynov-vue)
 
+### Activité du 08/11/2018 et du 09/11/2018
+
+Création du composant pour la fiche salarié et création du composant de planning
+
+## Lien vers le projet
+
 Le projet est disponible à l'url suivante : [gta.ynov.benjaminbrasseur.fr](http://gta.ynov.benjaminbrasseur.fr)
 
 ## Installation du projet 
