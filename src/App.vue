@@ -39,21 +39,21 @@
                         </a>
                     </router-link>
                     <router-link tag="li" to="/responsable/gestion/salarie" class="nav-item" exact-active-class="active"
-                                 v-if="user.type==='responsable_equipe'">
+                                 v-if="user.type===user_types_const.RESPONSABLE_EQUIPE.value">
                         <a class="nav-link">
                             <i class="fas fa-users"></i>
                             <p> Gestion salariés</p>
                         </a>
                     </router-link>
                     <router-link tag="li" to="/responsable/planning" class="nav-item" exact-active-class="active"
-                                 v-if="user.type==='responsable_equipe'">
+                                 v-if="user.type===user_types_const.RESPONSABLE_EQUIPE.value">
                         <a class="nav-link">
                             <i class="fa fa-calendar-alt"></i>
                             <p> Planning équipe</p>
                         </a>
                     </router-link>
                     <router-link tag="li" to="/responsable/demande" class="nav-item" exact-active-class="active"
-                                 v-if="user.type==='responsable_equipe'">
+                                 v-if="user.type===user_types_const.RESPONSABLE_EQUIPE.value">
                         <a class="nav-link">
                             <i class="fas fa-exclamation-circle"></i>
                             <p> Gestion demandes</p>
@@ -68,7 +68,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <b-form-select v-model="user.type" :options="user_types" class="col-5" size="sm" right/>
-                <b-collapse is-nav>
+                <b-collapse is-nav id="collapse-sidebar">
                     <b-navbar-nav></b-navbar-nav>
                     <!-- Right aligned nav items -->
                     <b-navbar-nav class="ml-auto">
@@ -91,23 +91,20 @@
 </template>
 
 <script>
+import UserTypes from './constants/UserTypes'
+
 export default {
   name: 'App',
   data: function () {
     return {
+      user_types_const: UserTypes.UserTypes,
       user: {
-        type: 'salarie'
+        type: UserTypes.UserTypes.SALARIE.value
       },
       user_types: [
-        {
-          value: 'salarie', text: 'Salarié'
-        },
-        {
-          value: 'responsable_equipe', text: 'Responsable d\'équipe'
-        },
-        {
-          value: 'drh', text: 'DRH'
-        }
+        UserTypes.UserTypes.SALARIE,
+        UserTypes.UserTypes.RESPONSABLE_EQUIPE,
+        UserTypes.UserTypes.DRH
       ],
       side_bar_active: false
     }
