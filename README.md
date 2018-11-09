@@ -4,13 +4,24 @@ Pour voir les dernières modifcations, aller sur la branche `develop`.
 
 Pour suivre l'avacement du projet, il est aussi possible de consulter le [Trello](https://trello.com/b/1qy2WoFk/gta-ynov-vue)
 
-### Activité du 08/11/2018 et du 09/11/2018
+#### Bilan du 08/11 et du 09/11
 
-Création du composant pour la fiche salarié et création du composant de planning
+Système de login créé et composant de fiche salarié entièrement intégré. <br/>
+Mais pas eu le temps de créer le composant planning
 
 ## Lien vers le projet
 
 Le projet est disponible à l'url suivante : [gta.ynov.benjaminbrasseur.fr](http://gta.ynov.benjaminbrasseur.fr)
+
+### Utilisateurs
+
+Pour se connecter, il suffit de renseigner le mail de l'utilisateur, et de préciser n'importe quel mot de passe
+
+Salarié : `jean.salarie@supercomp.com`
+
+Responsable d'équipe: `harry.responsable@supercomp.com`
+
+DRH : `bill.drh@supercomp.com`
 
 ## Installation du projet 
 
