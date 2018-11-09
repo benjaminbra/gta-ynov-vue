@@ -47,7 +47,7 @@ export default {
         let loggedUser = dataService.getUserByEmail(this.login)
         console.log(loggedUser)
         if (loggedUser != null && loggedUser !== undefined) {
-          this.local_user = loggedUser.firstname
+          this.local_user = loggedUser
           this.$emit('logged', this.local_user)
         } else {
           this.error = 'Identifiants invalides'
