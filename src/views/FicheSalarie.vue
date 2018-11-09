@@ -1,7 +1,7 @@
 <template>
     <div id="FicheSalarie" class="container">
         <h2>Fiche salarié</h2>
-        <FicheSalarieForm :salarie="form.salarie"></FicheSalarieForm>
+        <FicheSalarieForm :salarie="form.salarie" :lockFixData="true"></FicheSalarieForm>
     </div>
 </template>
 
@@ -14,12 +14,12 @@ export default {
     return {
       form: {
         salarie: {
-          firstname: 'Test',
-          lastname: '',
-          birth_date: null,
-          address: 'Demo',
-          phone: '',
-          email: ''
+          firstname: this.$parent.user.firstname,
+          lastname: this.$parent.user.lastname,
+          birth_date: this.$parent.user.birth_date,
+          address: this.$parent.user.address,
+          phone: this.$parent.user.phone,
+          email: this.$parent.user.email
         }
       }
     }

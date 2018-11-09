@@ -1,7 +1,8 @@
 <template>
     <div id="app" class="row no-margin">
 
-        <div class="col-5 col-md-3 col-lg-2 no-padding sidebar" v-bind:class="{ active: side_bar_active}" id="nav_collapse">
+        <div class="col-5 col-md-3 col-lg-2 no-padding sidebar" v-bind:class="{ active: side_bar_active}"
+             id="nav_collapse">
             <div class="logo d-block d-md-none">
                 <button class="d-md-none btn btn-secondary" v-on:click="side_bar_active=!side_bar_active">
                     Fermer
@@ -20,40 +21,43 @@
                             <p> Dashboard</p>
                         </a>
                     </router-link>
-                    <router-link tag="li" to="/salarie/fiche" class="nav-item" exact-active-class="active">
+                    <router-link tag="li" to="/salarie/fiche" class="nav-item" exact-active-class="active"
+                                 v-if="isSalarie || isResponsable">
                         <a class="nav-link">
                             <i class="far fa-address-card"></i>
                             <p> Fiche salarié</p>
                         </a>
                     </router-link>
-                    <router-link tag="li" to="/salarie/planning" class="nav-item" exact-active-class="active">
+                    <router-link tag="li" to="/salarie/planning" class="nav-item" exact-active-class="active"
+                                 v-if="isSalarie || isResponsable">
                         <a class="nav-link">
                             <i class="far fa-calendar-alt"></i>
                             <p> Mon Planning</p>
                         </a>
                     </router-link>
-                    <router-link tag="li" to="/salarie/demande" class="nav-item" exact-active-class="active">
+                    <router-link tag="li" to="/salarie/demande" class="nav-item" exact-active-class="active"
+                                 v-if="isSalarie || isResponsable">
                         <a class="nav-link">
                             <i class="far fa-question-circle"></i>
                             <p> Mes demandes</p>
                         </a>
                     </router-link>
                     <router-link tag="li" to="/responsable/gestion/salarie" class="nav-item" exact-active-class="active"
-                                 v-if="user.type===user_types_const.RESPONSABLE_EQUIPE.value">
+                                 v-if="isResponsable">
                         <a class="nav-link">
                             <i class="fas fa-users"></i>
                             <p> Gestion salariés</p>
                         </a>
                     </router-link>
                     <router-link tag="li" to="/responsable/planning" class="nav-item" exact-active-class="active"
-                                 v-if="user.type===user_types_const.RESPONSABLE_EQUIPE.value">
+                                 v-if="isResponsable">
                         <a class="nav-link">
                             <i class="fa fa-calendar-alt"></i>
                             <p> Planning équipe</p>
                         </a>
                     </router-link>
                     <router-link tag="li" to="/responsable/demande" class="nav-item" exact-active-class="active"
-                                 v-if="user.type===user_types_const.RESPONSABLE_EQUIPE.value">
+                                 v-if="isResponsable">
                         <a class="nav-link">
                             <i class="fas fa-exclamation-circle"></i>
                             <p> Gestion demandes</p>
@@ -67,46 +71,76 @@
                 <button class="d-md-none btn btn-secondary" v-on:click="side_bar_active=!side_bar_active">
                     <i class="fa fa-bars"></i>
                 </button>
-                <b-form-select v-model="user.type" :options="user_types" class="col-5" size="sm" right/>
                 <b-collapse is-nav id="collapse-sidebar">
                     <b-navbar-nav></b-navbar-nav>
                     <!-- Right aligned nav items -->
                     <b-navbar-nav class="ml-auto">
 
-                        <b-nav-item-dropdown right hidden>
+                        <b-nav-item-dropdown right v-if="user!=null">
                             <!-- Using button-content slot -->
                             <template slot="button-content">
-                                <em>User</em>
+                                <em>{{ user.firstname }}</em>
                             </template>
                             <b-dropdown-item href="#">Profile</b-dropdown-item>
-                            <b-dropdown-item href="#">Signout</b-dropdown-item>
+                            <b-dropdown-item v-on:click="logout">Déconnexion</b-dropdown-item>
+                        </b-nav-item-dropdown>
+                        <b-nav-item-dropdown right v-else>
+                            <!-- Using button-content slot -->
+                            <template slot="button-content">
+                                <em>Connexion</em>
+                            </template>
+                            <LoginForm :user="user" @logged="isLogged"></LoginForm>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
 
                 </b-collapse>
             </b-navbar>
-            <router-view/>
+            <router-view :user="user"/>
         </div>
     </div>
 </template>
 
 <script>
 import UserTypes from './constants/UserTypes'
+import LoginForm from './components/LoginForm'
+import DataService from './services/DataService'
+
+let dataService = new DataService()
 
 export default {
   name: 'App',
+  components: { LoginForm },
   data: function () {
     return {
       user_types_const: UserTypes.UserTypes,
-      user: {
-        type: UserTypes.UserTypes.SALARIE.value
-      },
-      user_types: [
-        UserTypes.UserTypes.SALARIE,
-        UserTypes.UserTypes.RESPONSABLE_EQUIPE,
-        UserTypes.UserTypes.DRH
-      ],
+      user: null,
+      isSalarie: this.user != null && this.user.type === this.user_types_const.SALARIE.value,
+      isResponsable: this.user != null && this.user.type === this.user_types_const.RESPONSABLE_EQUIPE.value,
+      isDrh: this.user != null && this.user.type === this.user_types_const.DRH.value,
       side_bar_active: false
+    }
+  },
+  created: function () {
+    if (sessionStorage.getItem('gta-session')) {
+      this.user = dataService.getUserByEmail(sessionStorage.getItem('gta-session'))
+      this.refreshRoles()
+    }
+  },
+  methods: {
+    isLogged: function (user) {
+      this.user = user
+      sessionStorage.setItem('gta-session', user.email)
+      this.refreshRoles()
+    },
+    logout: function () {
+      this.user = null
+      sessionStorage.removeItem('gta-session')
+      this.refreshRoles()
+    },
+    refreshRoles: function () {
+      this.isSalarie = this.user != null && this.user.type === this.user_types_const.SALARIE.value
+      this.isResponsable = this.user != null && this.user.type === this.user_types_const.RESPONSABLE_EQUIPE.value
+      this.isDrh = this.user != null && this.user.type === this.user_types_const.DRH.value
     }
   }
 }
@@ -191,7 +225,7 @@ export default {
     }
 
     @media (max-width: 768px) {
-        .sidebar{
+        .sidebar {
             display: none;
         }
 
