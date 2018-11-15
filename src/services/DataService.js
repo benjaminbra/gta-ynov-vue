@@ -1,77 +1,65 @@
-import UserTypes from '../constants/UserTypes'
+import Package from '../../package'
+import axios from 'axios'
+
+let apiUrl = Package.apiUrl
+let token = null
+
+if (sessionStorage.getItem('gta-token') != null) {
+  token = sessionStorage.getItem('gta-token')
+}
 
 export default class DataService {
-  getUserByEmail (email) {
-    let userList = {
-      'jean.salarie@supercomp.com': {
-        firstname: 'Jean',
-        lastname: 'Salarie',
-        email: 'jean.salarie@supercomp.com',
-        phone: '0000000000',
-        address: '5 rue du bois brulé, 44000 Nantes',
-        birth_date: '1994-12-05',
-        type: UserTypes.UserTypes.SALARIE.value
-      },
-      'harry.responsable@supercomp.com': {
-        firstname: 'Harry',
-        lastname: 'Responsable',
-        email: 'harry.responsable@supercomp.com',
-        phone: '0000000000',
-        address: '5 rue du bois brulé, 44000 Nantes',
-        birth_date: '1994-12-05',
-        type: UserTypes.UserTypes.RESPONSABLE_EQUIPE.value
-      },
-      'bill.drh@supercomp.com': {
-        firstname: 'Bill',
-        lastname: 'Drh',
-        email: 'bill.drh@supercomp.com',
-        phone: '0000000000',
-        address: '5 rue du bois brulé, 44000 Nantes',
-        birth_date: '1994-12-05',
-        type: UserTypes.UserTypes.DRH.value
-      }
-    }
-    return userList[email]
+  getSalarieByEmail (email) {
+    return axios.get(`${apiUrl}/salaries?filter={"where":{"email":"${email}"}}&access_token=${token}`).then(function (resp) {
+      return resp.data
+    }).catch(function (err) {
+      throw err
+    })
   }
 
-  getUserById (id) {
-    return [
-      {
-        firstname: 'Jean',
-        lastname: 'Salarie',
-        email: 'jean.salarie@supercomp.com',
-        phone: '0000000000',
-        address: '5 rue du bois brulé, 44000 Nantes',
-        birth_date: '05/12/1994'
-      },
-      {
-        firstname: 'Harry',
-        lastname: 'Responsable',
-        email: 'harry.responsable@supercomp.com',
-        phone: '0000000000',
-        address: '5 rue du bois brulé, 44000 Nantes',
-        birth_date: '05/12/1994'
-      },
-      {
-        firstname: 'Bill',
-        lastname: 'Drh',
-        email: 'bill.drh@supercomp.com',
-        phone: '0000000000',
-        address: '5 rue du bois brulé, 44000 Nantes',
-        birth_date: '05/12/1994'
-      }
-    ]
+  getSalarieById (id) {
+    return axios.get(`${apiUrl}/salaries?filter={"where":{"userId":"${id}"}}&access_token=${token}`).then(function (resp) {
+      return resp.data
+    }).catch(function (err) {
+      throw err
+    })
   }
 
-  getSalariePlanning (email, startDate, endDate) {
+  getSalarieContract (id) {
+
+  }
+
+  getSalarieEvent (id, startDate, endDate) {
     return null
   }
 
-  checkPasswordSalarie (email, password) {
-    return true
+  updateSalarieById (salarie) {
+    return axios.patch(`${apiUrl}/salaries?access_token=${token}`, salarie).then(function (resp) {
+      return resp.data
+    }).catch(function (err) {
+      throw err
+    })
   }
 
-  updateUserById (id, user, callback) {
-    callback()
+  loginUser (email, password) {
+    return axios.post(`${apiUrl}/Users/login`, { 'email': email, 'password': password }).then(function (resp) {
+      token = resp.data.id
+      sessionStorage.setItem('gta-token', token)
+      return resp.data
+    }).catch(function (err) {
+      throw err
+    })
+  }
+
+  logoutUser () {
+    return axios.post(`${apiUrl}/Users/logout?access_token=${token}`).then(function (resp) {
+      if (sessionStorage.getItem('gta-token') != null) {
+        sessionStorage.removeItem('gta-token')
+        token = null
+      }
+      return resp.data
+    }).catch(function (err) {
+      throw err
+    })
   }
 }

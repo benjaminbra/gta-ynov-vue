@@ -36,25 +36,30 @@ export default {
     return {
       login: null,
       password: null,
-      error: null,
-      local_user: this.user
+      error: null
     }
   },
   methods: {
     logging: function () {
       this.error = null
-      if (dataService.checkPasswordSalarie(this.login, this.password)) {
-        let loggedUser = dataService.getUserByEmail(this.login)
-        console.log(loggedUser)
-        if (loggedUser != null && loggedUser !== undefined) {
-          this.local_user = loggedUser
-          this.$emit('logged', this.local_user)
-        } else {
-          this.error = 'Identifiants invalides'
-        }
+      var loginUser = dataService.loginUser(this.login, this.password)
+      loginUser.then(this.onLoginSuccess,
+        this.onReject)
+    },
+    onLoginSuccess: function (userLogged) {
+      var getSalarie = dataService.getSalarieById(userLogged.userId)
+      getSalarie.then(this.onGetSalarieSuccess,
+        this.onReject)
+    },
+    onGetSalarieSuccess: function (userSalarie) {
+      if (userSalarie.length > 0) {
+        this.$emit('logged', userSalarie[0])
       } else {
-        this.error = 'Identifiants invalides'
+        this.onReject()
       }
+    },
+    onReject: function () {
+      this.error = 'Identifiants invalides'
     }
   }
 }

@@ -1,10 +1,10 @@
 <template>
     <div id="app" class="row no-margin">
 
-        <div class="col-5 col-md-3 col-lg-2 no-padding sidebar" v-bind:class="{ active: side_bar_active}"
+        <div class="col-5 col-md-3 col-lg-2 no-padding sidebar" v-bind:class="{ active: sideBarActive}"
              id="nav_collapse">
             <div class="logo d-block d-md-none">
-                <button class="d-md-none btn btn-secondary" v-on:click="side_bar_active=!side_bar_active">
+                <button class="d-md-none btn btn-secondary" v-on:click="sideBarActive=!sideBarActive">
                     Fermer
                 </button>
             </div>
@@ -68,7 +68,7 @@
         </div>
         <div class="col-12 col-md-9 col-lg-10 no-padding content">
             <b-navbar toggleable="md" class="nav_bar">
-                <button class="d-md-none btn btn-secondary" v-on:click="side_bar_active=!side_bar_active">
+                <button class="d-md-none btn btn-secondary" v-on:click="sideBarActive=!sideBarActive">
                     <i class="fa fa-bars"></i>
                 </button>
                 <b-collapse is-nav id="collapse-sidebar">
@@ -117,30 +117,42 @@ export default {
       isSalarie: this.user != null && this.user.type === this.user_types_const.SALARIE.value,
       isResponsable: this.user != null && this.user.type === this.user_types_const.RESPONSABLE_EQUIPE.value,
       isDrh: this.user != null && this.user.type === this.user_types_const.DRH.value,
-      side_bar_active: false
+      sideBarActive: false
     }
   },
   created: function () {
-    if (sessionStorage.getItem('gta-session')) {
-      this.user = dataService.getUserByEmail(sessionStorage.getItem('gta-session'))
-      this.refreshRoles()
+    console.log(sessionStorage.getItem('gta-session'))
+    console.log(sessionStorage.getItem('gta-token'))
+    if (sessionStorage.getItem('gta-session') != null) {
+      dataService.getSalarieById(sessionStorage.getItem('gta-session')).then(this.onGetSalarieSuccess)
     }
   },
   methods: {
     isLogged: function (user) {
       this.user = user
-      sessionStorage.setItem('gta-session', user.email)
+      sessionStorage.setItem('gta-session', user.userId)
       this.refreshRoles()
     },
     logout: function () {
-      this.user = null
-      sessionStorage.removeItem('gta-session')
-      this.refreshRoles()
+      try {
+        dataService.logoutUser()
+        this.user = null
+        sessionStorage.removeItem('gta-session')
+        this.refreshRoles()
+      } catch (e) {
+        console.log(e)
+      }
     },
     refreshRoles: function () {
       this.isSalarie = this.user != null && this.user.type === this.user_types_const.SALARIE.value
       this.isResponsable = this.user != null && this.user.type === this.user_types_const.RESPONSABLE_EQUIPE.value
       this.isDrh = this.user != null && this.user.type === this.user_types_const.DRH.value
+    },
+    onGetSalarieSuccess: function (userLogged) {
+      if (userLogged.length > 0) {
+        this.user = userLogged[0]
+        this.refreshRoles()
+      }
     }
   }
 }
