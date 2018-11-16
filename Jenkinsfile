@@ -13,7 +13,7 @@ node{
 
   stage('Push image') {
     docker.withRegistry('https://registry.gitlab.com/', 'gitlab-credentials') {
-      app.push("build-${env.BUILD_NUMBER}-${env.TYPE}")
+      app.push("build-${env.BUILD_NUMBER}-${env.VERSION}")
       app.push("latest")
     }
     sh 'echo "Image Well Pushed"'
