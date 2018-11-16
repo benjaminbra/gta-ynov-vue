@@ -1,7 +1,7 @@
-import Package from '../../package'
+import Config from '../../config'
 import axios from 'axios'
 
-let apiUrl = Package.apiUrl
+let apiUrl = Config.apiUrl
 let token = null
 
 if (sessionStorage.getItem('gta-token') != null) {
