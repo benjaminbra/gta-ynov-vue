@@ -4,15 +4,12 @@ Pour voir les dernières modifcations, aller sur la branche `develop`.
 
 Pour suivre l'avacement du projet, il est aussi possible de consulter le [Trello](https://trello.com/b/1qy2WoFk/gta-ynov-vue)
 
-#### Activité du 16/11
-
-Mise en ligne de la version du 15/11 <br/>
-Création du module de planning
-
-#### Bilan du 15/11
+#### Bilan du 15/11 et du 16/11
 
 Correction des anomalies liées à la connexion corrigées <br/>
-Création d'une connexion avec une véritable API
+Création d'une connexion avec une véritable API <br/>
+L'application avec l'API sont quasiment mises en ligne. <br/>
+Je n'ai pas eu le temps de créer le composant planning
 
 #### Bilan du 08/11 et du 09/11
 
