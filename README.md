@@ -2,6 +2,29 @@
 
 Pour suivre l'avacement du projet, il est aussi possible de consulter le [Trello](https://trello.com/b/1qy2WoFk/gta-ynov-vue)
 
+## Lien vers le projet
+
+Le projet est disponible à l'url suivante : [gta.ynov.benjaminbrasseur.fr](http://gta.ynov.benjaminbrasseur.fr)
+
+### Utilisateurs
+
+Pour se connecter: 
+1. Renseigner le mail de l'utilisateur
+2. Renseigner le mot de passe `0000`
+
+Salarié : `jean.salarie@supercomp.com`
+
+Responsable d'équipe: `harry.responsable@supercomp.com`
+
+DRH : `bill.drh@supercomp.com`
+
+### Bilan du 22/11
+
+Création du composant planning avec affichage des jours travaillés sur toute la période du contrat.<br/>
+Affichage des périodes de congés <br/>
+Amélioration du design du site <br/>
+Amélioration de l'affichage des pages en fonction du profil connecté. <br/>
+
 #### Bilan du 15/11 et du 16/11
 
 Correction des anomalies liées à la connexion corrigées <br/>
@@ -14,21 +37,15 @@ Je n'ai pas eu le temps de créer le composant planning
 Système de login créé et composant de fiche salarié entièrement intégré. <br/>
 Mais pas eu le temps de créer le composant planning
 
-## Lien vers le projet
+## Récupération de l'API
 
-Le projet est disponible à l'url suivante : [gta.ynov.benjaminbrasseur.fr](http://gta.ynov.benjaminbrasseur.fr)
+A venir
 
-### Utilisateurs
+## Installation via Docker-compose
 
-Pour se connecter, il suffit de renseigner le mail de l'utilisateur, et de préciser le mot de passe `0000`
+A venir
 
-Salarié : `jean.salarie@supercomp.com`
-
-Responsable d'équipe: `harry.responsable@supercomp.com`
-
-DRH : `bill.drh@supercomp.com`
-
-## Installation du projet 
+## Installation du projet manuellement
 
 Faire un clone du projet puis lancer la commande suivante pour récupérer les dépendances.
 ```
