@@ -71,29 +71,26 @@
                 <button class="d-md-none btn btn-secondary" v-on:click="sideBarActive=!sideBarActive">
                     <i class="fa fa-bars"></i>
                 </button>
-                <b-collapse is-nav id="collapse-sidebar">
-                    <b-navbar-nav></b-navbar-nav>
-                    <!-- Right aligned nav items -->
-                    <b-navbar-nav class="ml-auto">
+                <b-navbar-nav></b-navbar-nav>
+                <!-- Right aligned nav items -->
+                <b-navbar-nav class="ml-auto">
 
-                        <b-nav-item-dropdown right v-if="user!=null">
-                            <!-- Using button-content slot -->
-                            <template slot="button-content">
-                                <em>{{ user.firstname }}</em>
-                            </template>
-                            <b-dropdown-item href="#">Profile</b-dropdown-item>
-                            <b-dropdown-item v-on:click="logout">Déconnexion</b-dropdown-item>
-                        </b-nav-item-dropdown>
-                        <b-nav-item-dropdown right v-else>
-                            <!-- Using button-content slot -->
-                            <template slot="button-content">
-                                <em>Connexion</em>
-                            </template>
-                            <LoginForm :user="user" @logged="isLogged"></LoginForm>
-                        </b-nav-item-dropdown>
-                    </b-navbar-nav>
-
-                </b-collapse>
+                    <b-nav-item-dropdown right v-if="user!=null">
+                        <!-- Using button-content slot -->
+                        <template slot="button-content">
+                            <em>{{ user.firstname }}</em>
+                        </template>
+                        <b-dropdown-item href="#">Profile</b-dropdown-item>
+                        <b-dropdown-item v-on:click="logout">Déconnexion</b-dropdown-item>
+                    </b-nav-item-dropdown>
+                    <b-nav-item-dropdown right v-else>
+                        <!-- Using button-content slot -->
+                        <template slot="button-content">
+                            <em>Connexion</em>
+                        </template>
+                        <LoginForm :user="user" @logged="isLogged"></LoginForm>
+                    </b-nav-item-dropdown>
+                </b-navbar-nav>
             </b-navbar>
             <router-view v-if="user != null" :user="user"/>
         </div>
@@ -164,6 +161,7 @@ export default {
     #app {
         position: relative;
         height: 100%;
+        background: #daebe8;
     }
 
     .logo {
@@ -194,10 +192,6 @@ export default {
     .nav_bar a:hover {
         color: white;
         text-decoration: none;
-    }
-
-    .content {
-        background: #daebe8;
     }
 
     .sidebar {
