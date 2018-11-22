@@ -197,6 +197,7 @@ export default {
     .sidebar {
         box-shadow: 4px 0 10px #00000040;
         z-index: 1000;
+        background: white;
     }
 
     .sidebar-wrapper .nav-item {
