@@ -1,5 +1,5 @@
 <template>
-    <div id="FicheSalarieForm">
+    <div id="FicheSalarieForm" class="content-card">
         <div>
            <i class="fa" v-bind:class="{'fa-check': onUpdated, 'fas fa-spinner  fa-pulse': onUpdating}"></i> A jour
         </div>
@@ -46,10 +46,6 @@
 </template>
 
 <script>
-import DataService from '../services/DataService'
-
-let dataService = new DataService()
-
 export default {
   name: 'FicheSalarieForm',
   props: {

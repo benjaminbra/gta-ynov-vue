@@ -1,5 +1,5 @@
 <template>
-    <div id="PlanningForm" class="container">
+    <div id="PlanningForm" class="content-card">
         <full-calendar :events="events" :config="config"></full-calendar>
     </div>
 </template>
@@ -27,6 +27,7 @@ export default {
       config: {
         locale: 'fr',
         nowIndicator: true,
+        height: 550,
         businessHours: [{
           // days of week. an array of zero-based day of week integers (0=Sunday)
           dow: [1, 2, 3, 4, 5], // Monday - Thursday

@@ -13,3 +13,10 @@
 .navbar-light .navbar-nav .nav-link.disabled{
     color: #c7b5dc;
 }
+
+.content-card{
+    background: white;
+    padding: 10px;
+    box-shadow: 0 0 10px #00000040;
+    border-radius: 2px;
+}
