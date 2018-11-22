@@ -95,7 +95,7 @@
 
                 </b-collapse>
             </b-navbar>
-            <router-view :user="user"/>
+            <router-view v-if="user != null" :user="user"/>
         </div>
     </div>
 </template>
