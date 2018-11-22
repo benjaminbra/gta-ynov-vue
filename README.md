@@ -20,7 +20,7 @@ Le projet est disponible à l'url suivante : [gta.ynov.benjaminbrasseur.fr](http
 
 ### Utilisateurs
 
-Pour se connecter, il suffit de renseigner le mail de l'utilisateur, et de préciser n'importe quel mot de passe
+Pour se connecter, il suffit de renseigner le mail de l'utilisateur, et de préciser le mot de passe `0000`
 
 Salarié : `jean.salarie@supercomp.com`
 
