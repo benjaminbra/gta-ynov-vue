@@ -15,7 +15,8 @@
     "sass-loader": "^7.1.0",
     "vue": "^2.5.17",
     "vue-full-calendar": "^2.7.0",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuejs-datepicker": "^1.5.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",

@@ -10,7 +10,6 @@ import PlanningForm from '../components/PlanningForm'
 export default {
   name: 'PlanningSalarie',
   data: function () {
-    console.log(this.$parent.user)
     return {
       salarie: this.$parent.user
     }

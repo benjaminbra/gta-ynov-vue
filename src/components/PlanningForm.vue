@@ -9,6 +9,9 @@ import { FullCalendar } from 'vue-full-calendar'
 import 'fullcalendar/dist/fullcalendar.css'
 import 'fullcalendar/dist/locale/fr'
 import moment from 'moment'
+import DemandeForm from './DemandeForm'
+
+moment.locale('en')
 
 export default {
   name: 'PlanningForm',
@@ -16,18 +19,25 @@ export default {
     salarie: Object
   },
   components: {
+    DemandeForm,
     FullCalendar
   },
   data: function () {
     return {
       contractId: null,
       contracts: null,
+      demandeModal: false,
       salarieEvents: [],
       events: [],
       config: {
         locale: 'fr',
         nowIndicator: true,
         height: 550,
+        eventClick: function (calEvent, jsEvent, view) {
+          console.log(calEvent)
+          console.log(this.demandeModal)
+          this.demandeModal = true
+        },
         businessHours: [{
           // days of week. an array of zero-based day of week integers (0=Sunday)
           dow: [1, 2, 3, 4, 5], // Monday - Thursday
@@ -79,22 +89,38 @@ export default {
 
       for (let iSE in this.salarieEvents) {
         let salEvent = this.salarieEvents[iSE]
-        this.createEvent(moment(salEvent.start), moment(salEvent.end), salEvent.type)
+        this.createEvent(moment(salEvent.start), moment(salEvent.end), salEvent.type, iSE)
       }
     },
-    createEvent: function (startDate, endDate, type) {
+    createEvent: function (startDate, endDate, type, customId = null) {
       let event = {
         start: startDate.toDate(),
-        end: endDate.toDate()
+        end: endDate.toDate(),
+        editable: false
+      }
+
+      if (customId != null) {
+        event.id = customId
       }
 
       if (type === 'abs_conge') {
-        event.backgroundColor = '#ffbb3a'
+        event.backgroundColor = '#1cff22'
         event.title = 'Congé'
+        event.class = 'conge_valid'
+      } else if (type === 'abs_conge_await') {
+        event.backgroundColor = '#fff42f'
+        event.title = 'Demande de congé'
+        event.class = 'conge_await'
+      } else {
+        event.class = 'work'
       }
 
       this.events.push(event)
-    }
+    },
+    callForError: function (message) {
+      this.$parent.pushError(message)
+    },
+
   }
 }
 </script>

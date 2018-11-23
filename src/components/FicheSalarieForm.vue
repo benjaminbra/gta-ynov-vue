@@ -68,7 +68,7 @@ export default {
       this.onUpdating = true
       /**
       this.localSalarie.birthDate = (new Date(this.localSalarie.birthDate)).toISOString()
-      var updatingUser = dataService.updateSalarieById(this.localSalarie)
+      var updatingUser = dataService.updateSalarie(this.localSalarie)
       updatingUser.then(this.endUpdate)
       this.localSalarie.birthDate = (new Date(this.localSalarie.birthDate)).toISOString().substring(0, 10)**/
     },

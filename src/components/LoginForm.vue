@@ -16,9 +16,6 @@
             <b-form-group>
                 <b-button :disabled="login == null || password == null" v-on:click="logging">Connexion</b-button>
             </b-form-group>
-            <b-alert  :show="error != null" variant="danger" dismissible fade @dismissed="error = null">
-                {{ this.error }}
-            </b-alert>
         </b-form>
     </div>
 </template>
@@ -35,13 +32,11 @@ export default {
   data: function () {
     return {
       login: null,
-      password: null,
-      error: null
+      password: null
     }
   },
   methods: {
     logging: function () {
-      this.error = null
       var loginUser = dataService.loginUser(this.login, this.password)
       loginUser.then(this.onLoginSuccess,
         this.onReject)
@@ -59,7 +54,7 @@ export default {
       }
     },
     onReject: function () {
-      this.error = 'Identifiants invalides'
+      this.$emit('error-login', 'Identifiants invalides')
     }
   }
 }

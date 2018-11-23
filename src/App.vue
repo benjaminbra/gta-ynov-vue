@@ -88,11 +88,13 @@
                         <template slot="button-content">
                             <em>Connexion</em>
                         </template>
-                        <LoginForm :user="user" @logged="isLogged"></LoginForm>
+                        <LoginForm :user="user" @logged="isLogged" @error-login="pushError"></LoginForm>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
             </b-navbar>
+            <error-message v-for="(error, keyErr) in errorList" v-bind:key="keyErr" :error-prop="error" @delete-error="errorList.splice(keyErr)"></error-message>
             <router-view v-if="user != null" :user="user"/>
+            <splash-screen v-if="splashScreen"></splash-screen>
         </div>
     </div>
 </template>
@@ -101,12 +103,18 @@
 import UserTypes from './constants/UserTypes'
 import LoginForm from './components/LoginForm'
 import DataService from './services/DataService'
+import SplashScreen from './components/SplashScreen'
+import ErrorMessage from './components/ErrorMessage'
 
 let dataService = new DataService()
 
 export default {
   name: 'App',
-  components: { LoginForm },
+  components: {
+    LoginForm,
+    SplashScreen,
+    ErrorMessage
+  },
   data: function () {
     return {
       user_types_const: UserTypes.UserTypes,
@@ -114,14 +122,15 @@ export default {
       isSalarie: this.user != null && this.user.type === this.user_types_const.SALARIE.value,
       isResponsable: this.user != null && this.user.type === this.user_types_const.RESPONSABLE_EQUIPE.value,
       isDrh: this.user != null && this.user.type === this.user_types_const.DRH.value,
-      sideBarActive: false
+      sideBarActive: false,
+      splashScreen: false,
+      errorList: []
     }
   },
   created: function () {
-    console.log(sessionStorage.getItem('gta-session'))
-    console.log(sessionStorage.getItem('gta-token'))
     if (sessionStorage.getItem('gta-session') != null) {
-      dataService.getSalarieById(sessionStorage.getItem('gta-session')).then(this.onGetSalarieSuccess)
+      this.splashScreen = true
+      dataService.getSalarieById(sessionStorage.getItem('gta-session')).then(this.onGetSalarieSuccess, this.pushError)
     }
   },
   methods: {
@@ -131,14 +140,7 @@ export default {
       this.refreshRoles()
     },
     logout: function () {
-      try {
-        dataService.logoutUser()
-        this.user = null
-        sessionStorage.removeItem('gta-session')
-        this.refreshRoles()
-      } catch (e) {
-        console.log(e)
-      }
+      dataService.logoutUser().then(this.cleanSession, this.pushError)
     },
     refreshRoles: function () {
       this.isSalarie = this.user != null && this.user.type === this.user_types_const.SALARIE.value
@@ -149,7 +151,21 @@ export default {
       if (userLogged.length > 0) {
         this.user = userLogged[0]
         this.refreshRoles()
+        this.splashScreen = false
       }
+    },
+    pushError: function (message) {
+      this.splashScreen = false
+      this.errorList.push({
+        msg: message,
+        maxSecs: 10,
+        actualSec: 10
+      })
+    },
+    cleanSession: function () {
+      this.user = null
+      sessionStorage.removeItem('gta-session')
+      this.refreshRoles()
     }
   }
 }

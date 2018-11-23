@@ -12,17 +12,13 @@ export default class DataService {
   getSalarieByEmail (email) {
     return axios.get(`${apiUrl}/salaries?filter={"where":{"email":"${email}"}}&access_token=${token}`).then(function (resp) {
       return resp.data
-    }).catch(function (err) {
-      throw err
-    })
+    }, this.handleError)
   }
 
   getSalarieById (id) {
     return axios.get(`${apiUrl}/salaries?filter={"where":{"userId":"${id}"}}&access_token=${token}`).then(function (resp) {
       return resp.data
-    }).catch(function (err) {
-      throw err
-    })
+    }, this.handleError)
   }
 
   getSalarieContract (id) {
@@ -33,12 +29,10 @@ export default class DataService {
     return null
   }
 
-  updateSalarieById (salarie) {
+  updateSalarie (salarie) {
     return axios.patch(`${apiUrl}/salaries?access_token=${token}`, salarie).then(function (resp) {
       return resp.data
-    }).catch(function (err) {
-      throw err
-    })
+    }, this.handleError)
   }
 
   loginUser (email, password) {
@@ -46,9 +40,7 @@ export default class DataService {
       token = resp.data.id
       sessionStorage.setItem('gta-token', token)
       return resp.data
-    }).catch(function (err) {
-      throw err
-    })
+    }, this.handleError)
   }
 
   logoutUser () {
@@ -58,8 +50,16 @@ export default class DataService {
         token = null
       }
       return resp.data
-    }).catch(function (err) {
-      throw err
-    })
+    }, this.handleError)
+  }
+
+  handleError (e) {
+    let errMessage = null
+    if (e != null && e.message != null && e.message.includes('401')) {
+      errMessage = 'Veuillez vous connecter.'
+    } else {
+      errMessage = 'Une erreur est survenue. Veuillez contacter un administrateur'
+    }
+    return Promise.reject(errMessage)
   }
 }
